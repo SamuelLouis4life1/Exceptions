@@ -1,6 +1,14 @@
 ﻿using System;
 using HotelReservation.Entities;
 
+
+/// <summary>
+/// a program to read the data of a hotel reservation (room number, check-in date and check-out date) and show the reservation data, 
+/// including its duration in days. Then, read new check-in and check-out dates, update the reservation, 
+/// and show the reservation again with the updated data. The program must not accept invalid data for the reservation, 
+/// according to the following rules: -Booking changes can only occur for future dates -The departure date must be greater than the arrival date
+/// </summary>
+
 namespace HotelReservation
 {
     class Program
@@ -30,19 +38,14 @@ namespace HotelReservation
                 Console.Write("Check-out date (dd/MM/yyyy): ");
                 checkOut = DateTime.Parse(Console.ReadLine());
 
-                DateTime now = DateTime.Now;
-                if (checkIn < now || checkOut < now)
+                String error = reservation.UpdateDates(checkIn, checkOut);
+                if ( error != null)
                 {
-                    Console.WriteLine("Error in the reservation: Check-out date must be in a future dates ");
-                }
-                else if (checkOut <= checkIn)
-                {
-                    Console.WriteLine("Error in reservation: Check-out date must be after check-in date ");
+                    Console.WriteLine("Error in reservation: " + error);
                 }
                 else
                 {
-                    reservation.UpdateDates(checkIn, checkOut);
-                    Console.WriteLine("reservation: " + reservation);
+                    Console.WriteLine("Reservation: " + reservation);
                 }
             }
             Console.ReadLine();
